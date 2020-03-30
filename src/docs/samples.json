@@ -1,0 +1,20 @@
+{
+    "linkCards":  [
+        {
+        "title" : "Youtube",
+        "link": "https://www.youtube.com/?gl=AR&hl=es-419"
+        },
+        {
+            "title" : "Gmail",
+            "link": "https://mail.google.com"
+        },
+        {
+            "title" : "Facebook",
+            "link": "https://www.facebook.com/"
+        },
+        {
+            "title" : "Meli",
+            "link": "https://www.mercadolibre.com.ar/"
+        }    
+    ]
+}
