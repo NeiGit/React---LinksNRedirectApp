@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import './App.css';
 import { linkCards } from './docs/samples.json'
 import LinkCard from './components/LinkCard'
+import LinkCreationForm from './components/LinkCreationForm'
+import FileManager from 'fs'
 
 
 class App extends Component{
@@ -11,15 +13,40 @@ class App extends Component{
       linkCards
     }
   }
+
+  addNewCard = (name, src) => {
+    const newCard = {
+      title : name,
+      link : src
+    }
+    this.setState({
+      linkCards : [...this.state.linkCards, newCard]
+    })
+  }
+
+  handleDelete = linkCardTitle => {
+    const linkCards= this.state.linkCards.filter(l => l.title !== linkCardTitle)
+    this.setState ({
+      linkCards
+    })
+  }
+
+  saveCardsToJson = () => {
+    console.log(FileManager)
+    FileManager.writeFileSync('/docs/samples2.json', JSON.stringify(this.state.linkCards))
+  }
   render() {
   const cards = this.state.linkCards.map(e => {
     return (
               <LinkCard 
+                key = {e.title}
                 title = {e.title} 
                 link = {e.link}
+                deleteLinkCard = {this.handleDelete}
               />
     )
   })
+
   
   return (
     <div className="App">
@@ -31,11 +58,15 @@ class App extends Component{
             </span>
           </h1>
       </nav>
-    <div className = "container">
-      <div className = "row mt-4">
-        {cards}
-      </div>  
-    </div>  
+      <LinkCreationForm addNewCard = {this.addNewCard}/>
+      <div className = "container">
+        <div className = "row mt-4">
+          {cards}
+        </div>  
+      </div>
+      <div name = "footer" className = "container">
+          <button type = "button" onClick = {this.saveCardsToJson} className = "btn btn-info"> Save </button>
+      </div>
     </div>
   );
 }
